@@ -1,0 +1,53 @@
+/* vis: A4 landscape, one H1 per page, legend pinned bottom-left on diagram pages. */
+:root {
+  --c-person: #e6e6e6; --c-external: #f4f4f4; --c-entry: #dcefd8; --c-core: #fff6cc;
+  --c-store: #d6e6f7; --c-queue: #e8dcf5; --c-artifact: #fde3cc; --ink: #111;
+}
+@page { size: A4 landscape; margin: 12mm 14mm; }
+html { font-size: 11.5pt; }
+body { margin: 0; color: var(--ink); background: #fff;
+  font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 1.45; }
+main { max-width: 269mm; margin: 0 auto; }
+
+.page { min-height: 176mm; display: flex; flex-direction: column; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+
+h1 { font-size: 21pt; margin: 0 0 4pt; page-break-after: avoid; }
+h2 { font-size: 14pt; margin: 12pt 0 3pt; page-break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 8pt 0 2pt; page-break-after: avoid; }
+p, li { orphans: 3; widows: 3; }
+p { margin: 0 0 7pt; }
+h1 + p { margin-bottom: 8pt; }
+ul, ol { margin: 0 0 6pt; padding-left: 18pt; }
+li { margin-bottom: 2pt; }
+strong { font-weight: 600; }
+code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 9.5pt;
+  background: #f3f3f3; padding: 1px 4px; border-radius: 3px; }
+blockquote { margin: 0 0 6pt; padding: 5pt 10pt; border-left: 3px solid #999; background: #fafafa; }
+table { border-collapse: collapse; width: 100%; margin: 0 0 8pt; font-size: 10pt; page-break-inside: avoid; }
+th, td { border: 1px solid #ccc; padding: 4pt 7pt; text-align: left; vertical-align: top; line-height: 1.35; }
+th { background: #f0f0f0; font-weight: 600; }
+hr { border: 0; border-top: 1px solid #ddd; margin: 10pt 0; }
+
+.cols { columns: 2; column-gap: 20pt; }
+.cols ul, .cols p { break-inside: avoid; }
+
+.diagram { margin: 8pt 0 10pt; text-align: center; }
+.diagram svg { width: 100% !important; max-width: 100% !important; max-height: 118mm; height: auto; }
+.diagram.full svg { max-height: 138mm; }
+.diagram.short svg { max-height: 78mm; }
+.diagram-error { border: 2px solid #c00; background: #fff3f3; color: #900; padding: 8pt;
+  font-family: Menlo, monospace; font-size: 9pt; white-space: pre-wrap; }
+
+/* Legend strip, bottom-left of every diagram page */
+.legend { margin-top: auto; padding-top: 4pt; border-top: 1px solid #ddd; font-size: 7.5pt; color: #444;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4pt 14pt; }
+.legend-shapes, .legend-edges, .legend-crumbs { display: flex; align-items: center; gap: 9pt; }
+.lg { display: inline-flex; align-items: center; gap: 3pt; white-space: nowrap; }
+.lg svg { width: 22px; height: 13px; }
+.legend-edges .lg svg { width: 28px; height: 8px; }
+.legend-crumbs { margin-left: auto; gap: 0; }
+.crumb { padding: 1pt 6pt; border: 1px solid #bbb; color: #777; background: #fff; }
+.crumb + .crumb { border-left: 0; }
+.page[data-level="1"] .crumb-1, .page[data-level="2"] .crumb-2, .page[data-level="3"] .crumb-3 {
+  background: #333; color: #fff; border-color: #333; font-weight: 600; }

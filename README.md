@@ -16,8 +16,9 @@ Personal [Claude Code](https://claude.com/claude-code) skills. Each one is a sla
 | 8 | `/sec` | Before push | • Stack-aware vulnerability hypotheses with realistic exploit paths<br>• Secret, dangerous-API, auth-coverage scans<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
 | 9 | `/unify` | Last gate before push | • UI drift against canonical tokens and components<br>• Architecture diagram vs running services<br>• Model/external calls bypassing the canonical wrapper<br>• Plans HIGH + MED fixes in plan mode |
 | 10 | `/propose` | Planning next | • Phased roadmap (NOW / NEXT / SOON / LATER) from session context<br>• Each item: effort · action → measurable result |
-| 11 | `/close` | End of session | • Runs `/lesson`<br>• Comments on and closes the GitHub issue worked on<br>• Runs `/issues` to re-rank what's left |
-| 12 | `/dump` | Handing off | • Writes `progress/<timestamp>.md` (+ PDF via pandoc)<br>• Overview, state, decisions, how to run, next steps<br>• Manual only: never auto-invoked |
+| 11 | `/vid` | Marketing the project | • Short code-built motion film from the project's value proposition<br>• Flags: `--scope` `--example` `--theme` (`match` = the production UI) `--mood` `--length` `--aspect`/`--dest` `--voice` `--music` `--sfx` `--footage` `--cta` `--truth` `--critics`<br>• Story, voiceover, library music edited to the cut, screened sound effects, HyperFrames render at 1080p60<br>• Measured bar (frozen time, loudness) plus independent critic rounds, then a ledger<br>• Needs Node 22+, ffmpeg, Chrome, Python with numpy/scipy |
+| 12 | `/close` | End of session | • Runs `/lesson`<br>• Comments on and closes the GitHub issue worked on<br>• Runs `/issues` to re-rank what's left |
+| 13 | `/dump` | Handing off | • Writes `progress/<timestamp>.md` (+ PDF via pandoc)<br>• Overview, state, decisions, how to run, next steps<br>• Manual only: never auto-invoked |
 
 ## Token cost
 
@@ -28,14 +29,15 @@ Runtime cost (files read, tool output) comes on top and depends on the repo.
 ```mermaid
 xychart-beta
   title "Tokens loaded per invocation (incl. chained skills)"
-  x-axis ["vis", "unify", "sec", "close", "perf", "issues", "dump", "propose", "study", "lesson", "yo", "flow"]
+  x-axis ["vis", "vid", "unify", "sec", "close", "perf", "issues", "dump", "propose", "study", "lesson", "yo", "flow"]
   y-axis "tokens" 0 --> 10000
-  bar [9659, 1995, 1836, 1335, 1210, 733, 511, 437, 380, 337, 211, 202]
+  bar [9659, 3547, 1995, 1836, 1335, 1210, 733, 511, 437, 380, 337, 211, 202]
 ```
 
 | Skill | Own | Chains into | Per invocation | Always loaded (description) |
 |---|---:|---|---:|---:|
 | `/vis` | 9279 | `/study` | 9659 | 96 |
+| `/vid` | 3547 | — | 3547 | 93 |
 | `/unify` | 1615 | `/study` | 1995 | 101 |
 | `/sec` | 1456 | `/study` | 1836 | 74 |
 | `/close` | 265 | `/lesson`, `/issues`, `/study` | 1335 | 43 |
@@ -47,7 +49,7 @@ xychart-beta
 | `/lesson` | 337 | — | 337 | 49 |
 | `/yo` | 211 | — | 211 | 60 |
 | `/flow` | 202 | — | 202 | 40 |
-| **All descriptions** | | | | **743** |
+| **All descriptions** | | | | **836** |
 <!-- tokens:end -->
 
 ## Install

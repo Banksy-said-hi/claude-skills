@@ -8,17 +8,18 @@ Personal [Claude Code](https://claude.com/claude-code) skills. Each one is a sla
 |---|---|---|---|
 | 1 | `/study` | Start of a session | • Reads README, manifest, entry points, core modules<br>• Maps architecture, conventions, recent git activity<br>• Reads `lessons/` on a fresh session<br>• Prints a structured "ready to build" summary |
 | 2 | `/issues` | Choosing work | • Runs `/study` if not done yet<br>• Pulls open GitHub issues via `gh`<br>• Root cause, fix, downstream effects per issue<br>• Ranks them by value-to-effort |
-| 3 | `/flow` | Understanding | • ASCII box-and-arrow architecture diagram<br>• One-line legend per component |
-| 4 | `/vis` | Understanding (deep) | • Studies the repo, extracts real dependency edges<br>• Builds a 14–18 page landscape PDF on `~/Desktop`<br>• Architecture map, layers, I/O, load, per-feature map + sequence<br>• Needs Node and Chrome/Chromium on macOS |
-| 5 | `/yo` | Back from a break | • One line on what's in flight<br>• 3–5 terse status fragments<br>• Small ASCII picture only if relevant |
-| 6 | `/lesson` | After fixing a hard bug | • Writes `lessons/YYYY-MM-DD_slug.md`<br>• Symptom, red herrings, root cause, fix, checks for next time |
-| 7 | `/perf` | Before push | • Stack-aware performance hypotheses, verified in code<br>• Measures bundle sizes, deps, hot files<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
-| 8 | `/sec` | Before push | • Stack-aware vulnerability hypotheses with realistic exploit paths<br>• Secret, dangerous-API, auth-coverage scans<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
-| 9 | `/unify` | Last gate before push | • UI drift against canonical tokens and components<br>• Architecture diagram vs running services<br>• Model/external calls bypassing the canonical wrapper<br>• Plans HIGH + MED fixes in plan mode |
-| 10 | `/propose` | Planning next | • Phased roadmap (NOW / NEXT / SOON / LATER) from session context<br>• Each item: effort · action → measurable result |
-| 11 | `/vid` | Marketing the project | • Short code-built motion film from the project's value proposition<br>• Flags: `--scope` `--example` `--theme` (`match` = the production UI) `--mood` `--length` `--aspect`/`--dest` `--voice` `--music` `--sfx` `--footage` `--cta` `--truth` `--critics`<br>• Story, voiceover, library music edited to the cut, screened sound effects, HyperFrames render at 1080p60<br>• Measured bar (frozen time, loudness) plus independent critic rounds, then a ledger<br>• Needs Node 22+, ffmpeg, Chrome, Python with numpy/scipy |
-| 12 | `/close` | End of session | • Runs `/lesson`<br>• Comments on and closes the GitHub issue worked on<br>• Runs `/issues` to re-rank what's left |
-| 13 | `/dump` | Handing off | • Writes `progress/<timestamp>.md` (+ PDF via pandoc)<br>• Overview, state, decisions, how to run, next steps<br>• Manual only: never auto-invoked |
+| 3 | `/spec` | Before building (auto) | • Triage: small / bug / feature / idea<br>• Reads the code first, then scans for gaps (outcome, roles, money, access, outside services, privacy/law, platforms, edge cases, milestone fit) plus the repo's own `docs/specs/CHECKS.md`<br>• Asks only what changes the build: up to 4 multiple-choice questions, recommended option first, at most 2 rounds<br>• Writes `docs/specs/<slug>.md`; every other choice is a listed assumption the owner confirms<br>• Ready only on the owner's agreement; converge check when done<br>• Hooks: a reminder on every message and a gate that denies code edits and leaving plan mode without a ready spec (see Install) |
+| 4 | `/flow` | Understanding | • ASCII box-and-arrow architecture diagram<br>• One-line legend per component |
+| 5 | `/vis` | Understanding (deep) | • Studies the repo, extracts real dependency edges<br>• Builds a 14–18 page landscape PDF on `~/Desktop`<br>• Architecture map, layers, I/O, load, per-feature map + sequence<br>• Needs Node and Chrome/Chromium on macOS |
+| 6 | `/yo` | Back from a break | • One line on what's in flight<br>• 3–5 terse status fragments<br>• Small ASCII picture only if relevant |
+| 7 | `/lesson` | After fixing a hard bug | • Writes `lessons/YYYY-MM-DD_slug.md`<br>• Symptom, red herrings, root cause, fix, checks for next time |
+| 8 | `/perf` | Before push | • Stack-aware performance hypotheses, verified in code<br>• Measures bundle sizes, deps, hot files<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
+| 9 | `/sec` | Before push | • Stack-aware vulnerability hypotheses with realistic exploit paths<br>• Secret, dangerous-API, auth-coverage scans<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
+| 10 | `/unify` | Last gate before push | • UI drift against canonical tokens and components<br>• Architecture diagram vs running services<br>• Model/external calls bypassing the canonical wrapper<br>• Plans HIGH + MED fixes in plan mode |
+| 11 | `/propose` | Planning next | • Phased roadmap (NOW / NEXT / SOON / LATER) from session context<br>• Each item: effort · action → measurable result |
+| 12 | `/vid` | Marketing the project | • Short code-built motion film from the project's value proposition<br>• Flags: `--scope` `--example` `--theme` (`match` = the production UI) `--mood` `--length` `--aspect`/`--dest` `--voice` `--music` `--sfx` `--footage` `--cta` `--truth` `--critics`<br>• Story, voiceover, library music edited to the cut, screened sound effects, HyperFrames render at 1080p60<br>• Measured bar (frozen time, loudness) plus independent critic rounds, then a ledger<br>• Needs Node 22+, ffmpeg, Chrome, Python with numpy/scipy |
+| 13 | `/close` | End of session | • Runs `/lesson`<br>• Comments on and closes the GitHub issue worked on<br>• Runs `/issues` to re-rank what's left |
+| 14 | `/dump` | Handing off | • Writes `progress/<timestamp>.md` (+ PDF via pandoc)<br>• Overview, state, decisions, how to run, next steps<br>• Manual only: never auto-invoked |
 
 ## Token cost
 
@@ -58,6 +59,23 @@ xychart-beta
 git clone git@github.com:Banksy-said-hi/claude-skills.git
 cp -R claude-skills/skills/* ~/.claude/skills/
 ```
+
+`/spec` works on its own, but it is only automatic with its two hooks. Add to `~/.claude/settings.json`:
+
+```json
+"hooks": {
+  "UserPromptSubmit": [{"hooks": [{"type": "command", "command": "python3 \"$HOME/.claude/skills/spec/hooks/remind.py\"", "timeout": 5}]}],
+  "PreToolUse": [{"matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash|ExitPlanMode",
+                  "hooks": [{"type": "command", "command": "python3 \"$HOME/.claude/skills/spec/hooks/gate.py\"", "timeout": 10}]}]
+}
+```
+
+- `remind.py` adds one line to every message of six words or more: run `/spec` for a new feature or idea.
+- `gate.py` denies code edits (and file-writing shell commands, and leaving plan mode) in any git repo until
+  `docs/specs/` has a spec for the current branch with `status: ready` and no `[NEEDS CLARIFICATION]`.
+  Markdown, text, `docs/specs/` and temp paths stay writable; `docs/specs/.off` opts a repo out; a hook error lets the call through.
+- The shell check reads redirects, `tee`, `sed -i`/`perl -i`, `patch` and `git apply`; a determined workaround can
+  still get past it. The gate stops accidental skipping, not a model trying to dodge it.
 
 ## Maintaining this repo (for agents)
 

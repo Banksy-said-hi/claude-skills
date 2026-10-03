@@ -9,17 +9,18 @@ Personal [Claude Code](https://claude.com/claude-code) skills. Each one is a sla
 | 1 | `/study` | Start of a session | • Reads README, manifest, entry points, core modules<br>• Maps architecture, conventions, recent git activity<br>• Reads `lessons/` on a fresh session<br>• Prints a structured "ready to build" summary |
 | 2 | `/issues` | Choosing work | • Runs `/study` if not done yet<br>• Pulls open GitHub issues via `gh`<br>• Root cause, fix, downstream effects per issue<br>• Ranks them by value-to-effort |
 | 3 | `/spec` | Before building (auto) | • Triage: small / bug / feature / idea<br>• Reads the code first, then scans for gaps (outcome, roles, money, access, outside services, privacy/law, platforms, edge cases, milestone fit) plus the repo's own `docs/specs/CHECKS.md`<br>• Asks only what changes the build: up to 4 multiple-choice questions, recommended option first, at most 2 rounds<br>• Writes `docs/specs/<slug>.md`; every other choice is a listed assumption the owner confirms<br>• Ready only on the owner's agreement; converge check when done<br>• Hooks: a reminder on every message and a gate that denies code edits and leaving plan mode without a ready spec (see Install) |
-| 4 | `/flow` | Understanding | • ASCII box-and-arrow architecture diagram<br>• One-line legend per component |
-| 5 | `/vis` | Understanding (deep) | • Studies the repo, extracts real dependency edges<br>• Builds a 14–18 page landscape PDF on `~/Desktop`<br>• Architecture map, layers, I/O, load, per-feature map + sequence<br>• Needs Node and Chrome/Chromium on macOS |
-| 6 | `/yo` | Back from a break | • One line on what's in flight<br>• 3–5 terse status fragments<br>• Small ASCII picture only if relevant |
-| 7 | `/lesson` | After fixing a hard bug | • Writes `lessons/YYYY-MM-DD_slug.md`<br>• Symptom, red herrings, root cause, fix, checks for next time |
-| 8 | `/perf` | Before push | • Stack-aware performance hypotheses, verified in code<br>• Measures bundle sizes, deps, hot files<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
-| 9 | `/sec` | Before push | • Stack-aware vulnerability hypotheses with realistic exploit paths<br>• Secret, dangerous-API, auth-coverage scans<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
-| 10 | `/unify` | Last gate before push | • UI drift against canonical tokens and components<br>• Architecture diagram vs running services<br>• Model/external calls bypassing the canonical wrapper<br>• Plans HIGH + MED fixes in plan mode |
-| 11 | `/propose` | Planning next | • Phased roadmap (NOW / NEXT / SOON / LATER) from session context<br>• Each item: effort · action → measurable result |
-| 12 | `/vid` | Marketing the project | • Short code-built motion film from the project's value proposition<br>• Flags: `--scope` `--example` `--theme` (`match` = the production UI) `--mood` `--length` `--aspect`/`--dest` `--voice` `--music` `--sfx` `--footage` `--cta` `--truth` `--critics`<br>• Story, voiceover, library music edited to the cut, screened sound effects, HyperFrames render at 1080p60<br>• Measured bar (frozen time, loudness) plus independent critic rounds, then a ledger<br>• Needs Node 22+, ffmpeg, Chrome, Python with numpy/scipy |
-| 13 | `/close` | End of session | • Runs `/lesson`<br>• Comments on and closes the GitHub issue worked on<br>• Runs `/issues` to re-rank what's left |
-| 14 | `/dump` | Handing off | • Writes `progress/<timestamp>.md` (+ PDF via pandoc)<br>• Overview, state, decisions, how to run, next steps<br>• Manual only: never auto-invoked |
+| 4 | `/scout` | Before deciding | • Asks what to research for which decision (area, pending decisions, competitors, horizon, depth)<br>• Inventories our current approach first, with `file:line`<br>• Deep run: up to 4 parallel researchers; every claim sourced, dated and graded A–D; vendor marketing is not evidence<br>• Verifies the claims that drive recommendations; looks for the case against<br>• Writes `docs/research/<date>-<slug>.md` (bottom line, competitors, findings: others / us / gap / better, avoid list, proposed changes, sources) and an index; a re-run starts with "changed since"<br>• Hands adopted changes to `/spec` or issues |
+| 5 | `/flow` | Understanding | • ASCII box-and-arrow architecture diagram<br>• One-line legend per component |
+| 6 | `/vis` | Understanding (deep) | • Studies the repo, extracts real dependency edges<br>• Builds a 14–18 page landscape PDF on `~/Desktop`<br>• Architecture map, layers, I/O, load, per-feature map + sequence<br>• Needs Node and Chrome/Chromium on macOS |
+| 7 | `/yo` | Back from a break | • One line on what's in flight<br>• 3–5 terse status fragments<br>• Small ASCII picture only if relevant |
+| 8 | `/lesson` | After fixing a hard bug | • Writes `lessons/YYYY-MM-DD_slug.md`<br>• Symptom, red herrings, root cause, fix, checks for next time |
+| 9 | `/perf` | Before push | • Stack-aware performance hypotheses, verified in code<br>• Measures bundle sizes, deps, hot files<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
+| 10 | `/sec` | Before push | • Stack-aware vulnerability hypotheses with realistic exploit paths<br>• Secret, dangerous-API, auth-coverage scans<br>• Severity-ranked ASCII report<br>• Plans HIGH fixes in plan mode, executes on approval |
+| 11 | `/unify` | Last gate before push | • UI drift against canonical tokens and components<br>• Architecture diagram vs running services<br>• Model/external calls bypassing the canonical wrapper<br>• Plans HIGH + MED fixes in plan mode |
+| 12 | `/propose` | Planning next | • Phased roadmap (NOW / NEXT / SOON / LATER) from session context<br>• Each item: effort · action → measurable result |
+| 13 | `/vid` | Marketing the project | • Short code-built motion film from the project's value proposition<br>• Flags: `--scope` `--example` `--theme` (`match` = the production UI) `--mood` `--length` `--aspect`/`--dest` `--voice` `--music` `--sfx` `--footage` `--cta` `--truth` `--critics`<br>• Story, voiceover, library music edited to the cut, screened sound effects, HyperFrames render at 1080p60<br>• Measured bar (frozen time, loudness) plus independent critic rounds, then a ledger<br>• Needs Node 22+, ffmpeg, Chrome, Python with numpy/scipy |
+| 14 | `/close` | End of session | • Runs `/lesson`<br>• Comments on and closes the GitHub issue worked on<br>• Runs `/issues` to re-rank what's left |
+| 15 | `/dump` | Handing off | • Writes `progress/<timestamp>.md` (+ PDF via pandoc)<br>• Overview, state, decisions, how to run, next steps<br>• Manual only: never auto-invoked |
 
 ## Token cost
 
@@ -30,9 +31,9 @@ Runtime cost (files read, tool output) comes on top and depends on the repo.
 ```mermaid
 xychart-beta
   title "Tokens loaded per invocation (incl. chained skills)"
-  x-axis ["vis", "vid", "unify", "sec", "close", "perf", "issues", "dump", "propose", "study", "lesson", "yo", "flow"]
+  x-axis ["vis", "vid", "unify", "sec", "spec", "close", "perf", "issues", "dump", "propose", "study", "lesson", "yo", "flow"]
   y-axis "tokens" 0 --> 10000
-  bar [9659, 3547, 1995, 1836, 1335, 1210, 733, 511, 437, 380, 337, 211, 202]
+  bar [9659, 3547, 1995, 1836, 1772, 1335, 1210, 733, 511, 437, 380, 337, 211, 202]
 ```
 
 | Skill | Own | Chains into | Per invocation | Always loaded (description) |
@@ -41,6 +42,7 @@ xychart-beta
 | `/vid` | 3547 | — | 3547 | 93 |
 | `/unify` | 1615 | `/study` | 1995 | 101 |
 | `/sec` | 1456 | `/study` | 1836 | 74 |
+| `/spec` | 1772 | — | 1772 | 71 |
 | `/close` | 265 | `/lesson`, `/issues`, `/study` | 1335 | 43 |
 | `/perf` | 830 | `/study` | 1210 | 62 |
 | `/issues` | 353 | `/study` | 733 | 48 |
@@ -50,7 +52,7 @@ xychart-beta
 | `/lesson` | 337 | — | 337 | 49 |
 | `/yo` | 211 | — | 211 | 60 |
 | `/flow` | 202 | — | 202 | 40 |
-| **All descriptions** | | | | **836** |
+| **All descriptions** | | | | **907** |
 <!-- tokens:end -->
 
 ## Install
